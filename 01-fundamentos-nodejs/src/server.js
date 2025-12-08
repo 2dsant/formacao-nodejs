@@ -1,15 +1,15 @@
 import http from 'node:http';
 import { json } from './middlewares/json.js';
-import { Database } from './database.js';
 
-const database = new Database();
 
 const server = http.createServer(async (req, res) => {
     await json(req, res);
 
-    console.log(body);
+    const route = routes.find(route => route.method === req.method && route.path === req.url);
 
-    return res.writeHead(201).end();
+    if (route) {
+        return route.handler(req, res);
+    }
 });
 
 server.listen(3333);
